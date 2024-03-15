@@ -16,21 +16,23 @@ export const getTaskCode = async () => {
 
     taskCode.code = taskCode.code.trim();
 
-    return taskCode;
+    return taskCode.code;
   } catch (e) {
     console.log(chalk.redBright("Что-то пошло не так... Ошибка: "), e);
   }
 };
 
-export async function deleteTask() {
+export async function deleteTask(deleteTaskCode = undefined) {
   try {
-    const deleteTaskCode = await getTaskCode();
+    if (!deleteTaskCode) {
+      deleteTaskCode = await getTaskCode();
+    }
 
     await connectDB();
 
     const spinner = ora("Ищем и удаляем задачу").start();
 
-    const response = await Todos.deleteOne({ code: deleteTaskCode.code });
+    const response = await Todos.deleteOne({ code: deleteTaskCode });
 
     spinner.stop();
 

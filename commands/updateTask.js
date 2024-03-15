@@ -42,7 +42,7 @@ export async function updateTask() {
 
     const spinner = ora("Ищем задачу...").start();
 
-    const todo = await Todos.findOne({ code: userCode.code });
+    const todo = await Todos.findOne({ code: userCode });
 
     spinner.stop();
 
